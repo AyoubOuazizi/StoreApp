@@ -1,0 +1,14 @@
+<div class="d-flex flex-column min-vh-100">
+    <app-navbar *ngIf="!isLogin()"></app-navbar>
+    <div class="row">
+        <div class="col-2">
+            <app-side-bar></app-side-bar>
+        </div>
+        <div class="col">
+            <div class="container mt-4">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+    <app-footer class="mt-auto"></app-footer>
+</div>

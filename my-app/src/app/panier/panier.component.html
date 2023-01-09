@@ -1,0 +1,33 @@
+<table class="table table-hover">
+    <caption *ngIf="!panier.length">
+        <div class="alert alert-danger mt-3" role="alert">
+            Your Cart is empty
+        </div>
+    </caption>
+    <thead>
+        <tr>
+            <th scope="col">Items</th>
+            <th scope="col">Price</th>
+            <th scope="col">Qte</th>
+            <th scope="col">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let elem of panier">
+            <td class="row mx-0" scope="row">
+                <img class="rounded float-start col-sm-auto" src="{{elem.product.imageURL}}" style="height: 45px">
+                <P class="align-middle col my-auto">{{elem.product.libelle}}</P>
+            </td>
+            <td class="align-middle">{{elem.product.price}} $</td>
+            <td class="align-middle col-md-2">
+                <input type="number" class="form-control" id="qte" [ngModel]="elem.qte">
+            </td>
+            <td class="col-md-1 align-middle text-center">
+                <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary mb-3" [disabled]="!panier.length">Checkout</button>
+</div>

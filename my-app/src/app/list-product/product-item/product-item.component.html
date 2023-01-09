@@ -1,0 +1,22 @@
+<div class="card shadow-sm p-3 bg-white rounded backgroundEffect overflow-hidden">
+    <div class="backgroundEffect"></div>
+    <div class="pic m-auto w-100 text-center">
+        <img src="{{product.imageURL}}" class="card-img-top h-100 w-100">
+    </div>
+    <div class="card-body" (click)="showDetails()">
+        <h5 class="card-title">{{product.libelle}}</h5>
+        <div class="card-text">
+            <div class="form-group row">
+                <label for="qte" class="col col-form-label">Qte</label>
+                <div class="col" (click)="$event.stopPropagation()">
+                  <input type="number" class="form-control" id="qte" [ngModel]="qte" [disabled]="!product.dispo">
+                </div>
+            </div>
+            <p>Price: {{product.price}} $</p>
+            <p [ngStyle]="{color: product.dispo? 'green' : 'red'}">{{product.dispo? "En stock" : "En rupture de stock"}}</p>
+        </div>
+        <div (click)="$event.stopPropagation()">
+            <button href="#" class="btn btn-primary" (click)="onProductClick($event)" [disabled]="!product.dispo">Add to cart</button>
+        </div>
+    </div>
+</div>

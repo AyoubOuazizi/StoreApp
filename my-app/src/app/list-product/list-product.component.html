@@ -1,0 +1,5 @@
+<div class="row">
+    <div class="col-3 my-2" *ngFor="let product of products">
+        <app-product-item [product]="product" (productSelected)="productSelected($event)"></app-product-item>
+    </div>
+</div>
