@@ -1,77 +1,20 @@
-.card {
-    transition: all 0.5s ease;
-    /* cursor: pointer; */
-    user-select: none;
+a,
+a:hover {
+    text-decoration: none;
+    color: inherit;
 }
 
-.card .backgroundEffect {
-    bottom: 0;
-    height: 0px;
-    width: 100%
+.productImg {
+    background-size: cover;
+    transition: all 0.3s;
 }
 
-.card:hover {
-    color: #fff;
-    transform: scale(1.025);
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px
+.disabled-link {
+    pointer-events: none;
+    opacity: 0.5;
 }
 
-.card:hover .backgroundEffect {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    background: #1b9ce3;
-    animation: popBackground 0.3s ease-in;
-    left: 0;
-    border-radius: 5px;
-}
-
-@keyframes popBackground {
-    0% {
-        height: 20px;
-        border-top-left-radius: 50%;
-        border-top-right-radius: 50%
-    }
-
-    50% {
-        height: 80px;
-        border-top-left-radius: 75%;
-        border-top-right-radius: 75%
-    }
-
-    75% {
-        height: 160px;
-        border-top-left-radius: 85%;
-        border-top-right-radius: 85%
-    }
-
-    100% {
-        height: 320px;
-        border-top-left-radius: 100%;
-        border-top-right-radius: 100%
-    }
-} 
-
-.card .pic {
-    position: relative;
-    height: 182px;
-}
-
-.card .card-body {
-    position: relative;
-}
-
-.card:hover .card-body .btn {
-    background: #fff;
-    color: #1b9ce3;
-    box-shadow: #0000001a 0px 3px 5px
-}
-
-.card-title {
-    height: 100px;
-}
-
-.card:hover .pic img {
-    transition: all 0.5s ease;
-    transform: scale(1.1);
+.related {
+    background-color: #f7f7fa;
+    padding: 40px 0 85px;
 }

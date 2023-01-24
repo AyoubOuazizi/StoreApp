@@ -1,15 +1,15 @@
 export class Product {
-    id!:number; 
-    libelle!: string; 
-    price!: number; 
-    imageURL!:string;
-    dispo!:boolean;
-
-    constructor(id:number, libelle: string, price: number, imageURL:string, dispo:boolean) {
-        this.id = id;
-        this.libelle = libelle;
-        this.price = price;
-        this.imageURL = imageURL;
-        this.dispo = dispo;
-    }
+    constructor(
+        public id: number,
+        public title: string,
+        public description: string,
+        public price: number,
+        public discountPercentage: number,
+        public rating: number,
+        public stock: number,
+        public brand: string,
+        public category: string,
+        public thumbnail: string,
+        public images: string[]
+    ) {}
 }

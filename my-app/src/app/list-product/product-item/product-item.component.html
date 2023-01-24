@@ -1,22 +1,42 @@
-<div class="card shadow-sm p-3 bg-white rounded backgroundEffect overflow-hidden">
+<!-- <div class="card shadow-sm p-3 bg-white rounded backgroundEffect overflow-hidden">
     <div class="backgroundEffect"></div>
     <div class="pic m-auto w-100 text-center">
-        <img src="{{product.imageURL}}" class="card-img-top h-100 w-100">
+        <img src="{{product.thumbnail}}" class="card-img-top h-100 w-100">
     </div>
     <div class="card-body" (click)="showDetails()">
-        <h5 class="card-title">{{product.libelle}}</h5>
+        <h5 class="card-title">{{product.title}}</h5>
         <div class="card-text">
             <div class="form-group row">
                 <label for="qte" class="col col-form-label">Qte</label>
                 <div class="col" (click)="$event.stopPropagation()">
-                  <input type="number" class="form-control" id="qte" [ngModel]="qte" [disabled]="!product.dispo">
+                  <input type="number" class="form-control" id="qte" [ngModel]="qte" [disabled]="!product.stock">
                 </div>
             </div>
             <p>Price: {{product.price}} $</p>
-            <p [ngStyle]="{color: product.dispo? 'green' : 'red'}">{{product.dispo? "En stock" : "En rupture de stock"}}</p>
+            <p [ngStyle]="{color: product.stock? 'green' : 'red'}">{{product.stock? "En stock" : "En rupture de stock"}}</p>
         </div>
         <div (click)="$event.stopPropagation()">
-            <button href="#" class="btn btn-primary" (click)="onProductClick($event)" [disabled]="!product.dispo">Add to cart</button>
+            <button href="#" class="btn btn-primary" (click)="onProductClick($event)" [disabled]="!product.stock">Add to cart</button>
         </div>
     </div>
-</div>
+</div> -->
+
+
+    <div id="product-1" class="single-product w-100" (click)="showDetails()">
+        <div class="part-1">
+                <img src="{{product.thumbnail}}" class="productImg">
+                <span class="discount">{{product.discountPercentage}}% off</span>
+                <ul>
+                        <li (click)="$event.stopPropagation()"><a (click)="addToCart($event)" type="button" [class.disabled-link]="!product.stock"><i class="fas fa-shopping-cart"></i></a></li>
+                        <li (click)="$event.stopPropagation()"><a (click)="addToBookmarks()" type="button" [ngStyle]="{color: saved? '#fe302f':'#444444'}"><i class="fas fa-heart"></i></a></li>
+                        <!-- <li><a href="#"><i class="fas fa-plus"></i></a></li> -->
+                        <li (click)="$event.stopPropagation()"><a (click)="showDetails()" type="button"><i class="fas fa-expand"></i></a></li>
+                </ul>
+            </div>
+            <div class="part-2">
+                    <h3 class="product-title">{{product.title}}</h3>
+                    <h4 class="product-old-price">${{oldPrice}}</h4>
+                    <h4 class="product-price">${{product.price}}</h4>
+                    <p style="float: right; padding: 2px 8px; text-transform: uppercase; font-size: 0.85rem; font-weight: bold;" [ngStyle]="{'color': product.stock? '#155724' : '#842029', 'background-color': product.stock? '#d4edda' : '#f8d7da'}">{{product.stock? "In stock" : "Out of stock"}}</p>
+            </div>
+    </div>

@@ -1,0 +1,8 @@
+input.cvv[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input.cvv::-webkit-outer-spin-button,
+input.cvv::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}

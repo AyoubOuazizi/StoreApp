@@ -1,5 +1,27 @@
-<div class="row">
+<div class="row vh-100 justify-content-center align-items-center" *ngIf="products.length == 0 && !noResults()">
+    <span class="loader"></span>
+</div>
+<div class="vh-100 justify-content-center align-items-center text-center" *ngIf="products.length == 0 && noResults() && !isBookmarksPage()">
+    <img class="w-25 pt-5" src="https://www.hariom-atta.com/media/hariomatta//ohoshop_webapp/themes/shopper/assets/android/img/empty_product.svg" alt="">
+    <h4>Sorry, No products found !</h4>
+    <button class="btn btn-primary mt-4" routerLink="/produits" (click)="goToHome()">Go to Home</button>
+</div>
+<div class="vh-100 justify-content-center align-items-center text-center" *ngIf="products.length == 0 && bookmarks.length == 0 && isBookmarksPage()">
+    <img class="w-25 pt-5" src="https://www.hariom-atta.com/media/hariomatta//ohoshop_webapp/themes/shopper/assets/android/img/empty_product.svg" alt="">
+    <h4>There are no bookmarks !</h4>
+    <button class="btn btn-primary mt-4" routerLink="/produits" (click)="goToHome()">Go to Home</button>
+</div>
+<!-- <div class="row">
     <div class="col-3 my-2" *ngFor="let product of products">
         <app-product-item [product]="product" (productSelected)="productSelected($event)"></app-product-item>
     </div>
-</div>
+</div> -->
+<section class="section-products py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 col-xl-3" *ngFor="let product of products">
+                <app-product-item [product]="product" (productSelected)="productSelected($event)"></app-product-item>
+            </div>
+        </div>
+    </div>
+</section>

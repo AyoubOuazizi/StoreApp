@@ -1,11 +1,20 @@
 .preview-thumbnail.nav-tabs li {
-    width: 18%;
     margin-right: 2.5%;
+    display: inline-block;
+}
+
+.preview-thumbnail.nav-tabs {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: auto;
+    padding-top: 7px;
+    width: 100%;
 }
 
 .preview-thumbnail.nav-tabs li img {
     max-width: 100%;
     display: block;
+    height: 60px;
 }
 
 .preview-thumbnail.nav-tabs li:last-of-type {
@@ -24,121 +33,16 @@
     animation-duration: .3s;
 }
 
-.card {
-    margin-top: 50px;
-    background: #eee;
-    padding: 3em;
-    line-height: 1.5em;
-}
-
-@media screen and (min-width: 997px) {
-    .wrapper {
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-    }
-}
-
-.details {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-}
-
-.colors {
-    -webkit-box-flex: 1;
-    -webkit-flex-grow: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-}
-
-.product-title, .quantity, .price, .sizes, .colors {
+.quantity,
+.price {
     text-transform: UPPERCASE;
     font-weight: bold;
 }
 
-.checked, .price span {
-    color: #1b9ce3;
-}
-
-.product-title, .rating, .product-description, .price, .vote, .sizes {
+.rating,
+.price
+{
     margin-bottom: 15px;
-}
-
-.product-title {
-    margin-top: 0;
-}
-
-.size {
-    margin-right: 10px;
-}
-
-.size:first-of-type {
-    margin-left: 40px;
-}
-
-.color {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-    height: 2em;
-    width: 2em;
-    border-radius: 2px;
-}
-
-.color:first-of-type {
-    margin-left: 20px;
-}
-
-.add-to-cart, .like {
-    background: #1b9ce3;
-    padding: 0.7em 1em;
-    border: none;
-    text-transform: UPPERCASE;
-    font-weight: bold;
-    color: #fff;
-    -webkit-transition: background .3s ease;
-    transition: background .3s ease;
-}
-
-.add-to-cart:hover,
-.like:hover {
-    background: #1b9ce3;
-    color: #fff;
-}
-
-.not-available {
-    text-align: center;
-    line-height: 2em;
-}
-
-.not-available:before {
-    font-family: fontawesome;
-    content: "\f00d";
-    color: #fff;
-}
-
-.orange {
-    background: #ff9f1a;
-}
-
-.green {
-    background: #85ad00;
-}
-
-.blue {
-    background: #0076ad;
-}
-
-.tooltip-inner {
-    padding: 1.3em;
 }
 
 @-webkit-keyframes opacity {
@@ -168,3 +72,198 @@
         transform: scale(1);
     }
 }
+
+.breadcrumb {
+    margin-top: 15px;
+}
+
+.breadcrumb li {
+    display: inline-block;
+}
+
+.breadcrumb a {
+    color: #b5b6bd;
+    display: inline-block;
+    margin-right: 5px;
+    padding-right: 14px;
+    position: relative;
+}
+
+.breadcrumb a:hover {
+    color: #086fcf;
+}
+
+.breadcrumb a:after {
+    color: #b5b6bd;
+    content: ">";
+    position: absolute;
+    right: 0;
+}
+
+.card {
+    border: none
+}
+
+.product {
+    background-color: #eee
+}
+
+.brand {
+    font-size: 13px
+}
+
+.act-price {
+    color: #0d6efd;
+    font-weight: 700;
+    font-size: 35px;
+}
+
+.dis-price {
+    text-decoration: line-through 0.1em rgb(157 98 117);
+    font-weight: 600;
+    font-size: 30px;
+    color: #5175ab;
+}
+
+.about {
+    font-size: 14px
+}
+
+.cart i {
+    margin-right: 10px
+}
+
+.stars-outer {
+    position: relative;
+    display: inline-block;
+}
+
+.stars-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+}
+
+.stars-outer::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font: var(--fa-font-solid);
+    color: #ccc;
+}
+
+.stars-inner::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    content: "\f005 \f005 \f005 \f005 \f005";
+    font: var(--fa-font-solid);
+    color: #f8ce0b;
+}
+
+.input-number {
+    position: relative;
+    width: 160px;
+    height: 40px;
+    background-color: transparent;
+    overflow: hidden;
+    border-radius: 20px;
+    margin: 2px;
+}
+
+.input-number input {
+    height: 100%;
+    border-radius: 20px;
+    text-align: center;
+    color: #6C6DFF;
+    outline: 0;
+    border: 0;
+    font-size: 20px;
+    width: 60px;
+}
+
+.input-number input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.input-number input::-webkit-outer-spin-button,
+.input-number input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.input-number button {
+    font-family: "Varela Round", sans-serif;
+    font-size: 1.4rem;
+    display: inline-block;
+    width: 80px;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: rgb(13 110 253 / 45%);
+    transition: background-color .2s ease;
+}
+
+.input-number button:nth-of-type(1) {
+    padding-right: 50px
+}
+
+.input-number button:nth-of-type(2) {
+    padding-left: 50px;
+}
+
+.input-number button:hover {
+    background-color: rgb(13 110 253);
+}
+
+.input-group-addon {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; 
+    font-size: 17px;
+}
+
+input {
+    position: relative;
+    float: left;
+    margin-bottom: 0;
+    display: table-cell;
+    border: 1px solid #ccc;
+    margin: 0;
+    float: right;
+}
+
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    display: inline-block;
+    background-color: #eee;
+    height: 100%;
+    width: 100px;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 16px;
+    color: #6C6DFF;
+    letter-spacing: -1px;
+    outline: 0;
+    border: 0;
+}
+

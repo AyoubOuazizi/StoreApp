@@ -1,4 +1,7 @@
-<table class="table table-hover">
+<div class="row vh-100 justify-content-center align-items-center" *ngIf="isFetching()">
+    <span class="loader"></span>
+</div>
+<!-- <table class="table table-hover" *ngIf="!isFetching()">
     <caption *ngIf="!panier.length">
         <div class="alert alert-danger mt-3" role="alert">
             Your Cart is empty
@@ -15,8 +18,8 @@
     <tbody>
         <tr *ngFor="let elem of panier">
             <td class="row mx-0" scope="row">
-                <img class="rounded float-start col-sm-auto" src="{{elem.product.imageURL}}" style="height: 45px">
-                <P class="align-middle col my-auto">{{elem.product.libelle}}</P>
+                <img class="rounded float-start col-sm-auto" src="{{elem.product.thumbnail}}" style="height: 45px">
+                <P class="align-middle col my-auto">{{elem.product.title}}</P>
             </td>
             <td class="align-middle">{{elem.product.price}} $</td>
             <td class="align-middle col-md-2">
@@ -30,4 +33,152 @@
 </table>
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <button class="btn btn-primary mb-3" [disabled]="!panier.length">Checkout</button>
-</div>
+</div> -->
+<section class="h-100 h-custom" style="background-color: #f7f7f7;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card">
+            <div class="card-body p-4">
+  
+              <div class="row">
+  
+                <div class="col-lg-7">
+                    <h5 class="mb-3">
+                        <a routerLink="/" class="text-body" style="text-decoration: none;">
+                            <i class="fas fa-long-arrow-alt-left me-2"></i>
+                            Continue shopping
+                        </a>
+                    </h5>
+                    <hr>
+  
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                      <p class="mb-1">Shopping cart</p>
+                      <p class="mb-0">You have {{panier.length}} items in your cart</p>
+                    </div>
+                  </div>
+
+                    <div class="alert alert-danger mt-3" role="alert" *ngIf="!panier.length && !success">
+                        Your Cart is empty
+                    </div>
+
+                    <div class="alert alert-success mt-3" role="alert" *ngIf="success">
+                        THANK YOU! Your Order Has Been Processed
+                    </div>
+  
+                  <div class="card mb-3" *ngFor="let elem of panier; let i = index" [ngClass]="{'mb-lg-0' : i==panier.length-1}">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-row align-items-center">
+                          <div>
+                            <img
+                              src="{{elem.product.thumbnail}}"
+                              class="img-fluid rounded-3" alt="Shopping item" style="width: 65px; height: 65px;">
+                          </div>
+                          <div class="ms-3">
+                            <h5>{{elem.product.title}}</h5>
+                          </div>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                          <div class="mx-3" style="width: 90px;">
+                            <input type="number" class="form-control fw-normal mb-0 text-center pe-0" id="qte" [ngModel]="elem.qte" min="1" max="{{elem.product.stock}}" (change)="check(elem, $event)">
+                            <!-- <h5 class="fw-normal mb-0 text-center">2</h5> -->
+                          </div>
+                          <div style="width: 80px;">
+                            <h5 class="mb-0">${{elem.product.price*elem.qte}}</h5>
+                          </div>
+                          <a style="cursor: pointer;" (click)="delete(elem)"><i class="fas fa-trash-alt text-danger"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+  
+                </div>
+                <div class="col-lg-5">
+  
+                  <div class="card bg-light rounded-3">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="mb-0">Card details</h5>
+                      </div>
+  
+                      <p class="small mb-2">Card type</p>
+                      <a class="" style="color: #F79E1B;" type="button" [ngStyle]="{opacity: cardType==1?'1':'0.5'}" (click)="cardType=1"><i
+                          class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                      <a class="" style="color: #1434CB;" type="button" [ngStyle]="{opacity: cardType==2?'1':'0.5'}" (click)="cardType=2"><i
+                          class="fab fa-cc-visa fa-2x me-2"></i></a>
+                      <a class="" style="color: #6CC4EE;" type="button" [ngStyle]="{opacity: cardType==3?'1':'0.5'}" (click)="cardType=3"><i
+                          class="fab fa-cc-amex fa-2x me-2"></i></a>
+                      <a class="" style="color: #0079C1;" type="button" [ngStyle]="{opacity: cardType==4?'1':'0.5'}" (click)="cardType=4"><i class="fab fa-cc-paypal fa-2x"></i></a>
+  
+                      <form class="mt-4" (ngSubmit)="checkout(form)" #form="ngForm" id="form">
+                        <div class="form-outline form-white mb-4">
+                          <label class="form-label" for="typeText1">Cardholder's Name</label>
+                          <input type="text" id="typeText1" class="form-control form-control-lg"
+                            placeholder="Cardholder's Name" [(ngModel)]="trans.name" required #name="ngModel" name="name"/>
+                        </div>
+  
+                        <div class="form-outline form-white mb-4">
+                          <label class="form-label" for="typeText2">Card Number</label>
+                          <input type="number" id="typeText2" class="form-control form-control-lg cvv"
+                            placeholder="1234 5678 9012 3457" [(ngModel)]="trans.number" required #cardNumber="ngModel" name="cardNumber"/>
+                        </div>
+  
+                        <div class="row mb-4">
+                          <div class="col-md-6">
+                            <div class="form-outline form-white">
+                                <label class="form-label" for="typeExp">Expiration</label>
+                                <input type="text" id="typeExp" class="form-control form-control-lg"
+                                    placeholder="MM/YYYY" id="exp" [(ngModel)]="trans.date" required #date="ngModel" name="date"/>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="form-outline form-white">
+                                <label class="form-label" for="typeText">Cvv</label>
+                                <input type="number" id="typeText" class="form-control form-control-lg cvv"
+                                    placeholder="123" minlength="3" maxlength="3" [(ngModel)]="trans.cvv" (input)="cvvCheck($event)" name="cvv" required #cvv="ngModel"/>
+                            </div>
+                          </div>
+                        </div>
+  
+                      </form>
+  
+                      <hr class="my-4">
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2">Subtotal</p>
+                        <p class="mb-2">${{subtotal}}.00</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between">
+                        <p class="mb-2">Shipping</p>
+                        <p class="mb-2">$20.00</p>
+                      </div>
+  
+                      <div class="d-flex justify-content-between mb-4">
+                        <p class="mb-2">Total(Incl. taxes)</p>
+                        <p class="mb-2">${{subtotal+20}}.00</p>
+                      </div>
+  
+                      <button type="submit" class="btn btn-primary btn-block btn-lg" form="form"
+                        [disabled]="!form.form.valid">
+                        <div class="d-flex justify-content-between">
+                          <span>Checkout <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                        </div>
+                      </button>
+  
+                    </div>
+                  </div>
+  
+                </div>
+  
+              </div>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+  

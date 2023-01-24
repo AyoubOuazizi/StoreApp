@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { Product } from '../models/product';
 
 @Injectable({
@@ -18,21 +20,22 @@ export class ProductService {
     // new Product(8, "TV SAMSUNG", 100, "https://images.samsung.com/is/image/samsung/n-africa-fhd-t5300-ua43t5300auxmv-frontblack-237364315?$650_519_PNG$",true),
     // new Product(9, "TV SAMSUNG", 100, "https://images.samsung.com/is/image/samsung/n-africa-fhd-t5300-ua43t5300auxmv-frontblack-237364315?$650_519_PNG$",true)
   ];
+  productsEmitter = new Subject<Product[]>();
+  noResults: boolean = false;
+  
+  constructor(private http: HttpClient, private router: Router) {
+    this.fetchAllProducts();
+  }
 
-  constructor(private http: HttpClient) {
-    // this.http.get("https://dummyjson.com/products/categories").subscribe(
-    //   (results: any) => {
-    //     this.categories = results;
-    //     console.log(results);
-    //   }
-    // );
-
-    http.get("https://dummyjson.com/products").subscribe(
+  fetchAllProducts() {
+    let products : Product[] = [];
+    this.http.get("https://dummyjson.com/products?limit=100").subscribe(
       (results: any) => {
         results.products.forEach((element: any) => {
-          this.products.push(new Product(element.id, element.title, element.price, element.images[0], true))
+          products.push(element);
         });
-        console.log(results.products);
+        this.products = products;
+        this.productsEmitter.next(this.products);
       }
     );
   }
@@ -41,26 +44,65 @@ export class ProductService {
     this.add(product);
   }
 
-  get(id: number): Product|undefined {
-    return this.products.find((product: Product) => product.id === id);
+  get(id: number) {
+    return this.http.get(`https://dummyjson.com/products/${id}`);
   }
 
-  getAll(): Array<Product> {
-    return this.products;
+  getAll() {
+    this.productsEmitter.next(this.products);
+    this.noResults = false;
   }
 
-  filter(cat : String){
+  filter(cat : string){
     let products : Product[] = [];
-    this.http.get("https://dummyjson.com/products/category/"+cat).subscribe(
+    this.http.get(`https://dummyjson.com/products/category/${cat}`).subscribe(
       (results: any) => {
+        if (!results.total) {
+          this.router.navigate(['not-found']);
+          return;
+        }
         results.products.forEach((element: any) => {
-          products.push(new Product(element.id, element.title, element.price, element.images[0], true))
+          products.push(element);
         });
+        if (this.router.url.includes("produits"))
+          this.router.navigate(['produits',cat]).then(() => {
+            this.products = products;
+            this.productsEmitter.next(this.products);
+            this.noResults = false;
+          });
+        else {
+          this.products = products;
+          this.productsEmitter.next(this.products);
+          this.noResults = false;
+        }
+      }, 
+      error => {
+        this.router.navigate(['not-found']);
       }
     );
   }
 
-  // getCategories() {
-  //   return this.categories;
-  // }
+  getCategories() {
+    return this.http.get("https://dummyjson.com/products/categories");
+  }
+
+  search(motcle: String) {
+    let products : Product[] = [];
+    this.http.get("https://dummyjson.com/products/search?q="+motcle).subscribe(
+      (results: any) => {
+        results.products.forEach((element: any) => {
+          products.push(element);
+        });
+        this.router.navigate(['produits'],{queryParams:{search:motcle}}).then(() => {
+          this.products = products;
+          this.productsEmitter.next(this.products);
+          if(products.length == 0) {
+            this.noResults = true;
+          } else {
+            this.noResults = false;
+          }
+        });
+      }
+    );
+  }
 }

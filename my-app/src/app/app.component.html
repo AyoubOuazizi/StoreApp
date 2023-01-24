@@ -1,14 +1,15 @@
-<div class="d-flex flex-column min-vh-100">
-    <app-navbar *ngIf="!isLogin()"></app-navbar>
+<div class="container-fluid d-flex flex-column min-vh-100 overflow-auto">
+    <!-- <app-navbar *ngIf="!isLogin()"></app-navbar> -->
+    <app-side-bar style="width:inherit" *ngIf="!isLogin() && !showCat()"></app-side-bar>
     <div class="row">
-        <div class="col-2">
-            <app-side-bar></app-side-bar>
+        <div class="col-2" *ngIf="!isLogin() && showCat()">
+            <app-side-bar style="width:inherit"></app-side-bar>
         </div>
-        <div class="col">
-            <div class="container mt-4">
+        <div class="col pe-0 ps-0 d-flex flex-column min-vh-100" [ngClass]="{'pt-5' : !isLogin()}">
+            <div class="container-fluid m-0" [ngClass]="{'mt-4' : !isLogin() && !isPanier(), 'p-0': isDetails(), 'p-0 mt-0': isPanier()}">
                 <router-outlet></router-outlet>
             </div>
+            <app-footer class="mt-auto" *ngIf="!isLogin()"></app-footer>
         </div>
     </div>
-    <app-footer class="mt-auto"></app-footer>
 </div>

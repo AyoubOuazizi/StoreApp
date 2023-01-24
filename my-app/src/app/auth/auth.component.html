@@ -1,23 +1,36 @@
-<div class="vh-100 d-flex justify-content-center align-items-center">
-    <div class="col-md-4 p-5 shadow-sm border rounded-3">
-        <h2 class="text-center mb-4 text-primary">Login</h2>
-        <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
-                <input type="email" class="form-control border border-primary" id="exampleInputEmail1" aria-describedby="emailHelp">
+<div class="container">
+    <div class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="container-fluid m-auto px-0 py-4">
+            <div class="row vh-100 justify-content-center align-items-center" *ngIf="isLoading">
+                <span class="loader"></span>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control border border-primary" id="exampleInputPassword1">
+            <div class="row alert alert-danger w-100 m-auto position-relative" style="top: -0.5rem;" *ngIf="error && !isLoading">
+                <p class="m-auto">{{ error }}</p>
             </div>
-            <p class="small"><a class="text-primary" href="forget-password.html">Forgot password?</a></p>
-            <div class="d-grid">
-                <button class="btn btn-primary" type="submit" (click)="submit()">Login</button>
+            <div class="row d-flex justify-content-center align-items-center w-100 py-4 m-auto" *ngIf="!isLoading">
+                <div class="col-md-4 p-5 shadow-sm border rounded-3">
+                    <h2 class="text-center mb-4 text-primary">Login</h2>
+                    <form (ngSubmit)="login(loginForm)" #loginForm="ngForm">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input type="email" class="form-control border border-primary" name="email" aria-describedby="emailHelp" [(ngModel)]="user.email" email required #email="ngModel">
+                            <span class="help-block form-text text-danger" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control border border-primary" name="password" [(ngModel)]="user.password" required #password="ngModel">
+                        </div>
+                        <!-- <p class="small"><a class="text-primary" href="forget-password.html">Forgot password?</a></p> -->
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+                        </div>
+                    </form>
+                    <div class="mt-3">
+                        <p class="mb-0  text-center">Don't have an account? 
+                            <a href="" class="text-primary fw-bold" routerLink="/signup">Sign Up</a></p>
+                    </div>
+                </div>
             </div>
-        </form>
-        <div class="mt-3">
-            <p class="mb-0  text-center">Don't have an account? 
-                <a href="#" class="text-primary fw-bold">Sign Up</a></p>
         </div>
     </div>
 </div>

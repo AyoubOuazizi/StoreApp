@@ -1,34 +1,54 @@
-<div class="vh-100 d-flex justify-content-center align-items-center">
-    <div class="col-md-4 p-5 shadow-sm border rounded-3">
-        <h2 class="text-center mb-4 text-primary">Inscription</h2>
-        <form>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Nom</label>
-                <input type="text" class="form-control border border-primary" id="exampleInputEmail1">
+<div class="container">
+    <div class="vh-100 d-flex justify-content-center align-items-center">
+        <div class="container-fluid m-auto px-0 py-3">
+            <div class="row vh-100 justify-content-center align-items-center" *ngIf="isLoading">
+                <span class="loader"></span>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
-                <input type="email" class="form-control border border-primary" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <div class="row alert alert-danger w-100 m-auto position-relative" style="top: -0.5rem;" *ngIf="error && !isLoading">
+                <p class="m-auto">{{ error }}</p>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Telephone</label>
-                <input type="text" class="form-control border border-primary" id="exampleInputEmail1">
+            <div class="row d-flex justify-content-center align-items-center w-100 py-0 m-auto" *ngIf="!isLoading">
+                <div class="col-md-4 p-5 shadow-sm border rounded-3">
+                    <h2 class="text-center mb-3 text-primary">Inscription</h2>
+                    <form (ngSubmit)="signup(signupForm)" #signupForm="ngForm">
+                        <div class="mb-2">
+                            <label for="exampleInputEmail1" class="form-label mb-0">Name</label>
+                            <input type="text" class="form-control border border-primary" name="name" [(ngModel)]="user.name" #name="ngModel" required>
+                            <span class="help-block form-text text-danger" *ngIf="!name.valid && name.touched">Please enter a valid name!</span>
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputEmail1" class="form-label mb-0">Email</label>
+                            <input type="email" class="form-control border border-primary" name="email" aria-describedby="emailHelp" [(ngModel)]="user.email" email required #email="ngModel">
+                            <span class="help-block form-text text-danger" *ngIf="!email.valid && email.touched">Please enter a valid email!</span>
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputEmail1" class="form-label w-100 mb-0">Telephone</label>
+                            <input type="tel" class="form-control border border-primary" name="tel" [(ngModel)]="user.tel" required ng2TelInput [ng2TelInputOptions]="{initialCountry: 'ma', separateDialCode:true, preferredCountries: ['ma']}" pattern="^[\s0-9]*$" (hasError)="hasError($event,signupForm)" #tel="ngModel" (ng2TelOutput)="getNumber($event)">
+                            <span class="help-block form-text text-danger" *ngIf="(!tel.valid && tel.touched) || (!valid && tel.touched)">Please enter a valid phone number!</span>
+                        </div>
+                        <div class="mb-2">
+                            <label for="exampleInputPassword1" class="form-label mb-0">Password</label>
+                            <input type="password" class="form-control border border-primary" name="password" [(ngModel)]="user.password" required minlength="8" #password="ngModel">
+                            <div class="lh-sm" *ngIf="!password.valid && password.touched">
+                                <span class="help-block form-text text-danger">Please enter a valid password!</span><br>
+                                <span class="help-block form-text text-danger">Password must have more than 8 characters</span>    
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label mb-0">Address</label>
+                            <textarea class="form-control border border-primary" name="address" [(ngModel)]="user.address" required #address="ngModel"></textarea>
+                            <span class="help-block form-text text-danger" *ngIf="!address.valid && address.touched">Please enter a valid address!</span>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+                        </div>
+                    </form>
+                    <div class="mt-3">
+                        <p class="mb-0  text-center">Already have an account? 
+                            <a href="" class="text-primary fw-bold" routerLink="/">Login</a></p>
+                    </div>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control border border-primary" id="exampleInputPassword1">
-            </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Adresse</label>
-                <textarea class="form-control border border-primary" id="exampleInputEmail1"></textarea>
-            </div>
-            <div class="d-grid">
-                <button class="btn btn-primary" type="submit" >Sign Up</button>
-            </div>
-        </form>
-        <div class="mt-3">
-            <p class="mb-0  text-center">Already have an account? 
-                <a href="#" class="text-primary fw-bold">Login</a></p>
         </div>
     </div>
 </div>
